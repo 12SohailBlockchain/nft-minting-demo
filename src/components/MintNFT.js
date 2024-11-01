@@ -21,8 +21,14 @@ const MintNFT = () => {
       const contractAddress = '0xa6013D3e22EAC3d3f700b8982BA46B2B4c1b59c2'; // Replace with your actual contract address
       const contract = new ethers.Contract(contractAddress, ContractABI, signer);
 
-      // Set gas limit options
-      const options = { gasLimit: 3000000 }; // Adjust based on Etherscan or your testing
+      // Define the minting fee in ethers (adjust according to your contract's requirement)
+      const mintingFee = ethers.utils.parseEther("0.00001"); // 0.00001 ETH
+
+      // Set gas limit options and include the minting fee
+      const options = {
+        gasLimit: 3000000, // Adjust based on Etherscan or your testing
+        value: mintingFee, // Add the required minting fee here
+      };
 
       // Call mintMembership with recipientAddress and tokenURI only
       const tx = await contract.mintMembership(recipientAddress, tokenURI, options);
